@@ -49,6 +49,15 @@ Install the following packages first:
     ./configure
     make
     sudo make install
+    
+**Build and install with TLS support in Ubuntu 22:**
+
+Previously you have to install `libssl-dev` (`$ apt-get install libssl-dev`)
+
+    test -f configure || autoreconf -iv
+    ./configure --with-openssl=/usr/
+    make
+    sudo make install
 
 [![Build Status](https://travis-ci.org/satori-com/tcpkali.svg?branch=master)](https://travis-ci.org/satori-com/tcpkali)
 
