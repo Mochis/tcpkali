@@ -2854,6 +2854,11 @@ connection_free_internals(struct connection *conn) {
     message_collection_free(&conn->message_collection);
 
 #ifdef HAVE_OPENSSL
+    // Fix: https://github.com/satori-com/tcpkali/pull/69
+    if(conn->ssl_fd) {
+        SSL_free(conn->ssl_fd);
+    }
+    // end-fix
     if(conn->ssl_ctx) {
         SSL_CTX_free(conn->ssl_ctx);
     }

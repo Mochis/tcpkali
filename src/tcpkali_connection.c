@@ -16,8 +16,8 @@ ssl_setup(struct connection UNUSED *conn, int UNUSED sockfd,
                                        ? TLSv1_2_client_method()
                                        : TLSv1_2_server_method();
 #else
-                                       ? TLS_client_method()
-                                       : TLS_server_method();
+                                       ? TLSv1_2_client_method() // mTLS not working with TLSv1.3, I have to check it
+                                       : TLSv1_2_server_method();
 #endif
         if(method == NULL) {
             fprintf(stderr, "Can not create SSL method %lu\n", ERR_get_error());
@@ -31,7 +31,7 @@ ssl_setup(struct connection UNUSED *conn, int UNUSED sockfd,
         ERR_print_errors_fp(stderr);
         exit(1);
     } else {
-        if(conn->conn_type == CONN_INCOMING) {
+        //if(conn->conn_type == CONN_INCOMING) {
 #ifdef  HAVE_SSL_CTX_SET_ECDH_AUTO
             SSL_CTX_set_ecdh_auto(conn->ssl_ctx, 1);
 #endif
@@ -49,7 +49,7 @@ ssl_setup(struct connection UNUSED *conn, int UNUSED sockfd,
                         ERR_error_string(ERR_get_error(), NULL));
                 exit(1);
             }
-        }
+        //}
         if(!conn->ssl_fd) {
             conn->ssl_fd = SSL_new(conn->ssl_ctx);
             SSL_set_fd(conn->ssl_fd, sockfd);
