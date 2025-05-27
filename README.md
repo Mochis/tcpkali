@@ -1,6 +1,8 @@
 
 # About
 
+A fork of tcpkali that allows mTLS connections.
+
 `tcpkali` is a high performance TCP and WebSocket load generator and sink.
 
 ![tcpkali mascot](doc/images/tcpkali-mascot.png)
